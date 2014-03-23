@@ -1,0 +1,25 @@
+[core]
+	excludesfile = /home/pantinor/.gitignore_global
+[user]
+	email = pantinor@redhat.com
+	name = Paolo Antinori
+[github]
+	user = paoloantinori
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+	ui = true
+[alias]
+        hist = log --all --graph --pretty='[%C(cyan)%h%Creset]%C(bold cyan)%d%Creset %s'
+[merge]
+	tool = meld
+[push]
+	default = simple
+[diff]
+	guitool = meld
+[difftool]
+	prompt = false
+[help]
+	autocorrect = -5
