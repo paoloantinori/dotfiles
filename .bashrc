@@ -6,7 +6,9 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # https://github.com/trapd00r/LS_COLORS
-eval $(dircolors -b $HOME/.dircolors)
+if [ -f $HOME/.dircolors ]; then
+	eval $(dircolors -b $HOME/.dircolors)
+fi
 
 __prompt(){
 	printf_format='(%s)'
@@ -70,7 +72,8 @@ export PATH=/home/pantinor/sml/bin:$PATH
 
 export VISUAL="/usr/bin/sublime -n -w"
 
-alias grep='grep --color=auto'
+export GREP_OPTIONS='--color=auto'
+# export GREP_COLOR='1;33'
 alias yum='yum --color=auto'
 alias o='xdg-open'
 alias ll='ls -lh'
@@ -240,3 +243,7 @@ hr(){ yes -- ${@:-=} | tr -d $'\n' | head -c $COLUMNS ; }
 # Find a file with a pattern in name:  
 function ff() { find . -type f -iname '*'"$*"'*' -ls ; }  
 
+
+if [ -f ~/maven.completion.bash ]; then
+	source ~/maven.completion.bash 
+fi
