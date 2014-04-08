@@ -22,8 +22,7 @@ __prompt(){
 
 
 # PS1='[\e[1;35m\t\e[0m][\e[0;93m$(__prompt )\e[0m]\$ '
-#export PS1="[\u@\h \W]\\$ "
-#export PS1="\u@\[\e[33m\]\h\[\e[m\] "
+
 DARKGRAY='\e[1;30m'  
 LIGHTRED='\[\e[31m\]'
 GREEN='\e[32m'  
@@ -32,14 +31,17 @@ LIGHTBLUE='\e[1;34m'
 NC='\[\e[m\]'  # NO_COLOR
 PURPLE='\[\e[1;35m\]'
 
-PCT="\`if [[ \$EUID -eq 0 ]]; then T='$LIGHTRED' ; else T='$PURPLE'; fi;   
-echo \$T \`"  
+# i have to escape the dollar that invokes the function since i am within double quotes
+PCT="\$(if [[ \$EUID -eq 0 ]]; then T='$LIGHTRED' ; else T='$PURPLE'; fi;   echo \$T )"  
 
-PS1="\n$GREEN[\w] \n$DARKGRAY($PCT\t$DARKGRAY)-($PCT\u$DARKGRAY)-($PCT\!  
-$DARKGRAY)$YELLOW-> $NC"  
+## 2 lines prompt
+# PS1="\n$GREEN[\w] \n$DARKGRAY($PCT\t$DARKGRAY)-($PCT\u$DARKGRAY)-($PCT\!  $DARKGRAY)$YELLOW-> $NC"  
 
-#export PS1="\[\e[35m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]\\$ "
-export PS1="$PCT\u$NC@$YELLOW\h$NC\\$ "
+## simple prompt with colors
+# export PS1="$PCT\u$NC@$YELLOW\h$NC\\$ "
+# i have to escape the dollar that invokes the function since i am within double quotes
+export PS1="$PCT\t$NC $YELLOW\$(__prompt )$NC\\$ "
+
 
 
 # Maven opts
@@ -247,3 +249,8 @@ function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 if [ -f ~/maven.completion.bash ]; then
 	source ~/maven.completion.bash 
 fi
+
+###### docker
+dockerbuild() {
+	docker build -t "$1" . ;
+}
