@@ -99,9 +99,9 @@ if [ -f /data/software/ext/z/z.sh ]; then
 fi
 
 # init node.js
-if [ -f /data/repositories/github/apps/nvm/nvm.sh ]; then
-	source /data/repositories/github/apps/nvm/nvm.sh
-fi
+# if [ -f /data/repositories/github/apps/nvm/nvm.sh ]; then
+# 	source /data/repositories/github/apps/nvm/nvm.sh
+# fi
 
 # maven color
 if [ -f ~/colorize-maven.sh ]; then
@@ -254,3 +254,11 @@ fi
 dockerbuild() {
 	docker build -t "$1" . ;
 }
+
+# adding custom shortcuts to bash
+# binds to ALT+W
+bind '"\ew":"\C-e # macro"'
+# copy current location and send return
+bind '"\ec":"pwd | xclip -selection clipboard \C-j"'
+
+ 
