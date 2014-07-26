@@ -10,6 +10,9 @@ if [ -f $HOME/.dircolors ]; then
 	eval $(dircolors -b $HOME/.dircolors)
 fi
 
+
+
+
 __prompt(){
 	printf_format='(%s)'
 	TXT=$(pwd);
@@ -67,10 +70,11 @@ export PATH=/home/pantinor/sml/bin:$PATH
 
 #java
 #export JAVA_HOME=/usr/bin/JAVA_HOME
+export JAVA_HOME=/usr/java/jdk7_latest/
 #export PATH=$PATH:$JAVA_HOME/bin
 
 #gradle
-#export PATH=/data/software/ext/gradle/gradle-1.8/bin:$PATH
+export PATH=/data/software/ext/gradle/gradle-1.8/bin:$PATH
 
 export VISUAL="/usr/bin/sublime -n -w"
 
@@ -82,9 +86,10 @@ alias ll='ls -lh'
 alias lls='ll'
 alias cpprogress="rsync -WavP --human-readable --progress"
 alias gollum="(cd /data/repositories/openshift/wiki/ && gollum)"
-alias killkaraf="jps -lm | grep karaf | grep -v grep | awk '{print $1}' | xargs kill -KILL"
+alias killkaraf="jps -lm | grep karaf | grep -v grep | awk '{print $1}' | xargs -n1 kill -s KILL"
 alias sshi="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PreferredAuthentications=password"
 alias scpi="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o PreferredAuthentications=password"
+
 
 
 
@@ -137,14 +142,15 @@ bind 'set completion-ignore-case on'
 # Show extra file information when completing, like `ls -F` does
 bind 'set visible-stats on'
 
-
 ### cannot use an alias to inject the command line params
 mci() {
 	mvn clean install "$@" | h -i error success
 }
+
 ### cannot use an alias to inject the command line params
 mcis() {
-	mvn clean install -DskipTests -Dmaven.test.skip  "$@" | h -i error success
+	# mvn clean install -DskipTests -Dmaven.test.skip  "$@" | h -i error success
+	mvn clean install -DskipTests -Dmaven.javadoc.skip=true "$@" | h -i "error\|failure" success
 }
 
 # Color man pages
@@ -253,6 +259,10 @@ fi
 ###### docker
 dockerbuild() {
 	docker build -t "$1" . ;
+}
+
+ipof() {
+	docker inspect "$1" | grep IPAddress | grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' -o --color=none
 }
 
 # adding custom shortcuts to bash
